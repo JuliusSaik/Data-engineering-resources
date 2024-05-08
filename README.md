@@ -8,7 +8,23 @@ Resources, main commands, code, concepts etc. used for data engineering. All of 
 
 ## About Docker 
 
+Docker packages different applications with their specific configurations and allows easy, precise downloads for each container. It's easier to install and set up different services like DBs with Docker.
 
+### Basic working
+Creates a blueprint for your application with the Dockerfile, then creates a template as the image and later creates a container that installs all neccessary libs.
+
+### Main Commands:
+1. -d detach so terminal is not taken up, run it in the background
+2. -p 80:80 bind the 80 port to the containers port so you can access it and publish. (standard to use the same port)
+3. docker ps, images, rm, rmi - show the images/containers and remove them
+4. 
+
+### Creating a Dockefile (what you would have to do locally but in commands)
+1. `FROM node:19-alpine` start with the base image (Usually your programming language) 
+2. `COPY src /app/` copy the directories and files into container
+3. `WORKDIR /app` go into the created directory to work there
+4. `RUN npm install` Installing neccessary libs
+5. `CMD ["node", "server.js"]` starts the actual application with specific file in working directory
 
 
 ## About databases
