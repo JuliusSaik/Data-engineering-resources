@@ -1,36 +1,41 @@
 # Data-engineering-resources
-Resources, main commands, code, concepts etc. used for data engineering. All of it in a readme file for easy access and memory.
+Simplified key concepts, main functions and overview of the workflow used for data engineering beginners. All of it in a readme file for easy access and memory.
 
 ## Main tools
 1. Docker for easy image downloads and setups, also easier communication between databases and the scripts, exporting.
-2. Database like PostgreSQL, mySQL, mongoDB.
+2. Databases like PostgreSQL, MySQL, MongoDB.
 3. Python
+4. Bash terminal for running Docker commands, acessing DBs etc.
 
 ## About Docker 
-
 Docker packages different applications with their specific configurations and allows easy, precise downloads for each container. It's easier to install and set up different services like DBs with Docker.
 
-### Basic working
-Creates a blueprint for your application with the Dockerfile, then creates a template as the image and later creates a container that installs all neccessary libs.
+### Key concepts
+Docker works by creating a blueprint for your application with the `Dockerfile`, then creates a template as the image and later creates a container that installs all the neccessary libs.
+From one image you can spawn multiple different containers with different configurations.
 
-### Main Commands:
-1. -d detach so terminal is not taken up, run it in the background
-2. -p 80:80 bind the 80 port to the containers port so you can access it and publish. (standard to use the same port)
-3. docker ps, images, rm, rmi - show the images/containers and remove them
-4. 
+1. Docker compose - Used to define services and start containers from images. Easy way to set up containers, attach volumes, connect to networks and declare neccessary environment variables all at once in a `.yaml` file.
+run `docker compose up` to execute.
+2. Volumes - attach to databases to persist data even after shutting down the container. A volume is attached to the temporary `var/lib/data` path and is saved in the host file system.
+3. Networks - connect different containers to the same network and allow communication between them.
 
-### Creating a Dockefile (what you would have to do locally but in commands)
-1. `FROM node:19-alpine` start with the base image (Usually your programming language) 
-2. `COPY src /app/` copy the directories and files into container
-3. `WORKDIR /app` go into the created directory to work there
-4. `RUN npm install` Installing neccessary libs
-5. `CMD ["node", "server.js"]` starts the actual application with specific file in working directory
+
+### Main Functions:
+Docker flags and commands in bash:
+1. `-d` detach so terminal is not taken up, run it in the background
+2. `docker exec [container name] [command] [args]` execute specific a command that a container has.
+3. `docker ps, images, rm, rmi` - show the images/containers and remove them
+
+
+### Workflow (for example setting up a PostgresSQL database)
+1. Set up a `docker-compose.yaml` file and declare the services, postgres image and other variables. Specify a volume to `pgdata:var/lib/postgresql/data`
+2. Run `docker compose up -d`. Docker will pull the postgres image and start a container (specified service from the compose file) that acts as the actual database with your specific configurations.
+3. Run `docker -it exec [container_name] psql -U user -d [database name]` (-it means functional interactive terminal) to go into database and then write SQL from there.
 
 
 ## About databases
 Databases are SQL or noSQL. SQL DBs are ACID - atomicity, consistency, isolation, durability.
 Entire goal of databases is to effectively store information and minimize possible problems, later be able to effectively manipulate information and access it when needed.
-
 
 ### Relational Database management system (RDBMS):
 1. MySQL
@@ -45,7 +50,7 @@ Not super scalable but very reliable because of ACID.
 1. MarkLogic
 2. MongoDB
 3. ApacheCouchDB
-4. 
+   
 Stores information in JSON with key value pairs.
 Less rigid, scales better, has many functions but not ACID compliant.
 
@@ -62,5 +67,8 @@ More for relationships between data instead of particular data.
 2. MongoDB
 3. DynamoDB
 4. Memcached
+   
 Runs entirely in system memory, is super fast. 
+
+## Setting up a 
 
